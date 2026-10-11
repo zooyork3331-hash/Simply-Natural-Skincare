@@ -114,9 +114,13 @@ function artMarkup(product, asButton = false) {
   return `<${tag} class="product-art art-${escapeHtml(product.art)}" ${buttonAttrs}>${content}${product.badge ? `<span class="product-badge">${escapeHtml(product.badge)}</span>` : ''}</${tag}>`;
 }
 function renderProducts() {
-  const shown = activeFilter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeFilter);
-  $('productsGrid').innerHTML = shown.map((product) => `<article class="product-card">${artMarkup(product, true)}<div class="product-card-info"><div class="product-overline">${escapeHtml(product.mood)}</div><div class="product-card-top"><h3>${escapeHtml(product.name)}</h3><span class="product-price">${formatPrice(product.price)}</span></div><p class="product-desc">${escapeHtml(product.description)}</p><div class="product-buttons"><button type="button" class="add-button" data-action="add" data-id="${escapeHtml(product.id)}">+ Add to inquiry</button><button type="button" class="detail-button" data-action="details" data-id="${escapeHtml(product.id)}">Details</button></div></div></article>`).join('');
-  $('productTotal').textContent = `${shown.length} ${shown.length === 1 ? 'scrub' : 'scrubs'}`;
+  const grid = $('productsGrid');
+  if (!grid) return;
+  const allMatching = activeFilter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeFilter);
+  const limit = Number.parseInt(grid.dataset.limit || '0', 10);
+  const shown = limit > 0 ? allMatching.slice(0, limit) : allMatching;
+  grid.innerHTML = shown.map((product) => `<article class="product-card">${artMarkup(product, true)}<div class="product-card-info"><div class="product-overline">${escapeHtml(product.mood)}</div><div class="product-card-top"><h3>${escapeHtml(product.name)}</h3><span class="product-price">${formatPrice(product.price)}</span></div><p class="product-desc">${escapeHtml(product.description)}</p><div class="product-buttons"><button type="button" class="add-button" data-action="add" data-id="${escapeHtml(product.id)}">+ Add to inquiry</button><button type="button" class="detail-button" data-action="details" data-id="${escapeHtml(product.id)}">Details</button></div></div></article>`).join('');
+  if ($('productTotal')) $('productTotal').textContent = `${shown.length} ${shown.length === 1 ? 'scrub' : 'scrubs'}`;
 }
 function addToCart(id) {
   if (!getProduct(id)) return;
@@ -136,7 +140,7 @@ function renderCart() {
   const count = entries.reduce((sum, entry) => sum + entry.qty, 0);
   $('cartCount').textContent = String(count);
   $('cartHeadingCount').textContent = `(${count})`;
-  $('cartItems').innerHTML = !entries.length ? `<div class="cart-empty"><div class="empty-icon" aria-hidden="true">♡</div><h3>Your bag is waiting.</h3><p>Explore the scrubs and save a few favorites to send an inquiry.</p></div>` : entries.map(({product, qty}) => `<div class="cart-row"><div class="cart-art art-${escapeHtml(product.art)}" aria-hidden="true">✳</div><div class="cart-item-details"><h3>${escapeHtml(product.name)}</h3><span>${formatPrice(product.price)}${product.size ? ' · ' + escapeHtml(product.size) : ''}</span><div class="cart-quantity"><button type="button" data-cart="minus" data-id="${escapeHtml(product.id)}" aria-label="Remove one ${escapeHtml(product.name)}">−</button><span>${qty}</span><button type="button" data-cart="plus" data-id="${escapeHtml(product.id)}" aria-label="Add one ${escapeHtml(product.name)}">+</button><button type="button" class="cart-remove" data-cart="remove" data-id="${escapeHtml(product.id)}">Remove</button></div></div></div>`).join('');
+  $('cartItems').innerHTML = !entries.length ? `<div class="cart-empty"><div class="empty-icon" aria-hidden="true">♡</div><h3>Your bag is waiting.</h3><p>Explore <a href="scrubs.html">the scrubs</a> and save a few favorites to send an inquiry.</p></div>` : entries.map(({product, qty}) => `<div class="cart-row"><div class="cart-art art-${escapeHtml(product.art)}" aria-hidden="true">✳</div><div class="cart-item-details"><h3>${escapeHtml(product.name)}</h3><span>${formatPrice(product.price)}${product.size ? ' · ' + escapeHtml(product.size) : ''}</span><div class="cart-quantity"><button type="button" data-cart="minus" data-id="${escapeHtml(product.id)}" aria-label="Remove one ${escapeHtml(product.name)}">−</button><span>${qty}</span><button type="button" data-cart="plus" data-id="${escapeHtml(product.id)}" aria-label="Add one ${escapeHtml(product.name)}">+</button><button type="button" class="cart-remove" data-cart="remove" data-id="${escapeHtml(product.id)}">Remove</button></div></div></div>`).join('');
   $('copyRequest').disabled = count === 0;
   $('emailRequest').disabled = count === 0 || !validEmail(SITE_SETTINGS.email);
   $('emailRequest').title = validEmail(SITE_SETTINGS.email) ? '' : 'Set a business email address in script.js to enable email inquiries';
@@ -190,6 +194,7 @@ function hideDetails() {
 }
 function updateContacts() {
   const email = $('contactEmail'), insta = $('contactInstagram');
+  if (!email || !insta) return;
   if (validEmail(SITE_SETTINGS.email)) { email.href = `mailto:${encodeURIComponent(SITE_SETTINGS.email)}`;email.removeAttribute('aria-disabled'); }
   if (/^https:\/\/((www\.)?instagram\.com|instagr\.am)\/[\w.]+\/?(?:\?.*)?$/.test(SITE_SETTINGS.instagram)) {
     insta.href = SITE_SETTINGS.instagram;insta.target = '_blank';insta.rel = 'noopener noreferrer';insta.removeAttribute('aria-disabled');
@@ -198,7 +203,7 @@ function updateContacts() {
   [email, insta].forEach((link) => link.addEventListener('click', (event) => {if(link.getAttribute('aria-disabled') === 'true'){event.preventDefault();showToast('This contact link has not been set up yet.');}}));
 }
 function setupEvents() {
-  $('filters').addEventListener('click', (event) => {
+  if ($('filters')) $('filters').addEventListener('click', (event) => {
     const chip = event.target.closest('[data-filter]');if(!chip)return;
     activeFilter = chip.dataset.filter;
     $('filters').querySelectorAll('[data-filter]').forEach((button) => {const active = button === chip;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
@@ -209,7 +214,7 @@ function setupEvents() {
     if (el.dataset.action === 'add')addToCart(el.dataset.id);
     else if(el.dataset.action === 'details')showDetails(el.dataset.id);
   };
-  $('productsGrid').addEventListener('click', onAction);
+  if ($('productsGrid')) $('productsGrid').addEventListener('click', onAction);
   $('modalContent').addEventListener('click', onAction);
   $('cartItems').addEventListener('click', (event) => {
     const el = event.target.closest('[data-cart]');if(!el)return;

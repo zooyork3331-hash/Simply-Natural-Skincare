@@ -9,3 +9,54 @@
 @media(max-width:620px){html{scroll-padding-top:70px}.container{padding-inline:22px}.announcement{font-size:8px;letter-spacing:.08em;gap:10px}.nav-container{height:69px}.brand-mark{width:36px;height:42px}.brand-type strong{font-size:20px}.brand-type>span{font-size:7px;letter-spacing:.4em}.nav-actions{gap:8px}.hero-grid{display:flex;flex-direction:column;padding-inline:0}.hero-copy{padding:66px 22px 49px}.hero h1{font-size:clamp(46px,12vw,65px);max-width:480px;line-height:1.13}.hero-copy>p{max-width:440px}.hero-foot{margin-top:40px}.hero-visual{min-height:485px;width:100%}.hero-jar{top:45%;transform:translate(-50%,-43%) scale(.78)}.sun-disc{width:330px;height:330px;top:70px}.botanical-left{width:170px;left:-30px;top:24px}.botanical-right{width:170px;right:-44px;top:57px}.hero-note{right:15px;bottom:34px}.hero-index{bottom:17px}.benefits-grid{grid-template-columns:1fr;gap:12px;padding-block:19px}.benefits-grid>div{justify-content:flex-start;font-size:10px}.benefits-grid>div+div{border-left:0}.section-pad{padding-block:70px}.intro-split{align-items:flex-start;flex-direction:column;gap:15px}.section-intro h2,.ritual-content h2,.story-copy h2,.faq-intro h2{font-size:45px}.shop-controls{align-items:flex-start;flex-direction:column}.products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 12px}.product-art{height:240px}.product-jar{transform:translateY(10px) scale(.8)}.product-art:hover .product-jar{transform:translateY(4px) scale(.8)}.product-deco.one{left:2%;top:4%}.product-deco.two{right:0;bottom:4%}.product-badge{top:9px;left:9px;font-size:8px;padding:7px}.product-card-info h3{font-size:19px}.product-desc{font-size:11px;min-height:60px}.product-price{font-size:10px}.product-buttons{gap:5px;flex-direction:column}.product-buttons .detail-button{height:36px}.product-buttons .add-button{height:40px;flex:none}.shop-footer{line-height:2}.shop-footer a{display:inline-block;margin:0}.quote-inner{padding-block:55px}.quote-inner p{font-size:25px}.ritual-grid,.story-grid,.faq-grid{grid-template-columns:1fr;gap:42px}.ritual-visual{min-height:400px}.ritual-shape{width:350px;height:350px}.ritual-bowl{width:190px;height:190px;border-width:19px;left:23%;top:29%}.ritual-spoon{top:195px;left:49%;height:24px;width:190px}.ritual-content{max-width:100%}.story-section{padding-block:65px}.story-card{width:90%;margin:auto}.story-copy{padding:0}.faq-grid{gap:25px}.faq-list summary{font-size:16px}.contact-inner{padding-block:78px 80px}.contact-inner h2{font-size:51px}.contact-actions{flex-direction:column;align-items:stretch;width:100%;max-width:300px}.footer-main{flex-direction:column;gap:37px;padding-block:55px 40px}.footer-links{gap:60px}.footer-bottom{flex-direction:column;align-items:flex-start}.modal-grid{grid-template-columns:1fr}.modal-grid .product-art{height:230px;min-height:230px}.modal-text{padding:26px 24px 29px}.modal-text h2{font-size:31px}.product-modal{max-height:92vh}}
 @media(max-width:370px){.brand-type strong{font-size:18px}.brand-mark{width:30px}.products-grid{grid-template-columns:1fr}.product-art{height:315px}.product-jar{transform:translateY(10px)}.product-art:hover .product-jar{transform:translateY(4px)}.product-desc{min-height:0}.product-buttons{flex-direction:row}.product-buttons .detail-button{height:43px}.ritual-bowl{left:14%}.ritual-spoon{left:42%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+
+/* MULTI-PAGE EXTENSIONS — the existing visual identity is preserved. */
+.desktop-nav a[aria-current="page"],.mobile-nav a[aria-current="page"]{color:#547b4d}
+.desktop-nav a[aria-current="page"]{position:relative}
+.desktop-nav a[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:1px;background:#547b4d}
+.mobile-nav a[aria-current="page"]{font-weight:800}
+.section-end-link{text-align:center;margin-top:44px}
+.page-banner{overflow:hidden;position:relative;background:linear-gradient(105deg,#f6f5ee 0%,#eff1e8 100%);border-bottom:1px solid #e2e3da}
+.page-banner-inner{display:grid;grid-template-columns:1.55fr .45fr;min-height:345px;align-items:center;position:relative}
+.page-banner-content{padding:68px 0;position:relative;z-index:2}
+.page-banner h1{font:400 clamp(48px,5.7vw,79px)/1.15 var(--serif);letter-spacing:-.052em;margin:22px 0 16px;max-width:880px}
+.page-banner h1 em{font-weight:400;color:#778d70}
+.page-banner-content>p{font-size:15px;line-height:1.85;color:#6c766b;max-width:610px;margin:0}
+.page-breadcrumb{display:flex;gap:13px;align-items:center;margin-top:26px;font-size:10px;letter-spacing:.08em;color:#687b65;font-weight:700}
+.page-breadcrumb a{text-decoration:underline;text-underline-offset:4px}
+.page-banner-art{height:100%;min-height:260px;position:relative}
+.page-banner-sun{position:absolute;width:310px;height:310px;border-radius:50%;background:#dae4d3;top:50%;left:50%;transform:translate(-50%,-50%)}
+.page-banner-stem{position:absolute;left:20%;top:4%;font-size:240px;line-height:1;color:#8aaa7d;opacity:.65;transform:rotate(-22deg)}
+.page-banner-mark{position:absolute;bottom:33px;right:30px;text-align:center;font:italic 25px var(--serif);color:#4e704e;white-space:nowrap}
+.page-banner-mark small{font:700 8px var(--sans);letter-spacing:.4em}
+.editorial-band{background:#e6ebdf;padding:73px 0}
+.editorial-band-grid{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}
+.editorial-band-grid h2,.contact-prelude h2{font:400 clamp(39px,4.8vw,65px)/1.15 var(--serif);letter-spacing:-.05em;margin:18px 0}
+.editorial-band-grid h2 em,.contact-prelude h2 em,.values-section h2 em,.page-cta h2 em{font-weight:400;color:#7e9877}
+.editorial-band-grid p{color:#536c50;font-size:14px;line-height:1.9;max-width:500px}
+.values-section{background:#f7f5ef}
+.values-section .section-intro>p{color:#70786e;line-height:1.8}
+.values-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px;margin-top:39px}
+.values-grid article{background:#e9ede3;padding:40px 30px;min-height:235px}
+.values-grid article>span{color:#7e9877;font-size:37px}
+.values-grid h3{font:400 26px var(--serif);margin:16px 0 12px}
+.values-grid p{color:#6d7b6b;line-height:1.75;font-size:13px;margin:0}
+.page-cta{background:#36533c;color:#fff;text-align:center}
+.page-cta-inner{padding:84px 20px}
+.page-cta .eyebrow{justify-content:center;color:#cbd6c3}
+.page-cta h2{font:400 clamp(39px,5vw,67px) var(--serif);letter-spacing:-.05em;margin:21px 0 10px}
+.page-cta p{color:#dbe5d6;margin-bottom:30px}
+.contact-prelude-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:52px}
+.contact-prelude-cards{display:grid;gap:18px}
+.contact-prelude-cards article{border-bottom:1px solid var(--border);display:grid;grid-template-columns:50px 1fr;column-gap:18px;padding:0 0 17px}
+.contact-prelude-cards article span{color:#89a082;font:400 24px var(--serif);grid-row:1/3}
+.contact-prelude-cards h3{font:400 22px var(--serif);margin:0 0 5px}
+.contact-prelude-cards p{color:#778176;font-size:13px;line-height:1.65;margin:0}
+.cart-empty a{text-decoration:underline;text-underline-offset:3px}
+#featured .products-grid{margin-top:36px}
+#story-preview .story-copy{padding-top:45px;padding-bottom:45px}
+#faq-preview .faq-list details{background:transparent}
+#contact-preview .contact-inner{padding-block:90px}
+@media(max-width:850px){.page-banner-inner{grid-template-columns:1fr .25fr}.page-banner-stem{font-size:165px}.page-banner-sun{width:240px;height:240px}.page-banner-mark{font-size:18px;right:-5px}.editorial-band-grid{gap:30px}}
+@media(max-width:620px){.page-banner-inner{grid-template-columns:1fr;min-height:auto}.page-banner-content{padding:66px 0 62px}.page-banner-content>p{font-size:13px}.page-banner-art{position:absolute;right:-50px;top:-40px;width:200px;opacity:.25}.page-banner h1{font-size:clamp(43px,11vw,58px)}.page-banner-stem{font-size:160px}.page-banner-mark{display:none}.editorial-band{padding:58px 0}.editorial-band-grid,.contact-prelude-grid{grid-template-columns:1fr;gap:24px}.values-grid{grid-template-columns:1fr;gap:13px}.values-grid article{min-height:0;padding:25px}.contact-prelude-cards{margin-top:8px}#contact-preview .contact-inner{padding-block:70px}}
