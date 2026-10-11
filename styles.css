@@ -401,3 +401,40 @@
 @media(max-width:370px){
   .hero-editorial .hero-copy h1{font-size:34px}
 }
+
+
+/* Ritual photo replacement update */
+.ritual-visual-photo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:linear-gradient(180deg,#f4f1e8 0%,#ece9df 100%);
+}
+.ritual-photo-frame{
+  width:100%;
+  height:100%;
+  min-height:500px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.45);
+  border:1px solid rgba(255,255,255,.78);
+  box-shadow:0 22px 55px rgba(94,104,83,.10);
+  overflow:hidden;
+}
+.ritual-photo-image{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  background:#f6f2ea;
+}
+@media(max-width:850px){
+  .ritual-visual-photo{padding:20px;}
+  .ritual-photo-frame{min-height:460px;}
+}
+@media(max-width:620px){
+  .ritual-visual-photo{padding:16px;}
+  .ritual-photo-frame{min-height:360px;}
+}
