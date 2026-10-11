@@ -57,7 +57,7 @@ const PRODUCTS = [
     id: 'lip-scrub', name: 'Lip Scrub', shortName: 'lip scrub', category: 'face',
     mood: 'A LITTLE POLISH', description: 'A sugar-based lip scrub made for a little extra softness.',
     note: 'Ask which scents are currently available for this product.',
-    price: 8, size: '2 oz', badge: 'Lip care', art: 'rose', icon: 'scrub', image: '',
+    price: 8, size: '2 oz', badge: 'Lip care', art: 'rose', icon: 'scrub', image: 'assets/lip_scrub_collection.webp',
     ingredients: 'Sucrose (Fine White Sugar), Simmondsia Chinensis (Jojoba) Seed Oil, Prunus Amygdalus Dulcis (Sweet Almond) Oil, Cocos Nucifera (Coconut) Oil, Theobroma Cacao (Cocoa) Seed Butter, Tocopherol (Vitamin E), Essential Oils.'
   },
   {
