@@ -187,3 +187,8 @@
 .modal-text .ingredient-panel p{color:#657460;font-size:11px;line-height:1.8;margin:0;padding:0 15px 15px;overflow-wrap:break-word}
 .modal-text .modal-meta{margin:11px 0 13px}
 @media (max-width:620px){.ingredient-panel{margin-bottom:17px}.ingredient-panel summary{padding:14px}.modal-text .ingredient-panel p{font-size:12px}}
+
+/* Business email on the Contact page */
+.contact-email-address{margin:20px 0 0!important;font-size:13px!important;line-height:1.7!important;color:#e5eee1!important;overflow-wrap:anywhere}
+.contact-email-address a{color:#fff;text-decoration:underline;text-underline-offset:4px;text-decoration-color:#9cb694;font-weight:600}
+.contact-email-address a:hover,.contact-email-address a:focus-visible{color:#d1e9bd}

@@ -10,7 +10,7 @@
 */
 const SITE_SETTINGS = {
   demoMode: false,
-  email: '', // Example: 'hello@example.com' — replace with the REAL business email
+  email: 'skincaresimplynatural@gmail.com', // Business contact email
   instagram: '' // Example: 'https://www.instagram.com/your-real-handle/'
 };
 
