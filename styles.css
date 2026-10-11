@@ -128,3 +128,33 @@
 @media(max-width:1000px){.referral-grid{gap:35px}.referral-section{padding-block:75px}.referral-offers{grid-template-columns:1fr;gap:10px}.referral-offer{padding:15px}.referral-offer strong{font-size:27px}}
 @media(max-width:700px){.referral-section{padding-block:62px}.referral-grid{grid-template-columns:1fr;gap:38px}.referral-visual{max-width:530px;width:100%;margin-inline:auto}.referral-photo-frame{padding:9px;transform:rotate(-.6deg)}.referral-photo-footnote{margin-top:15px}.referral-copy{max-width:560px;width:100%;margin-inline:auto}.referral-copy h2{font-size:clamp(41px,10vw,58px)}.referral-offers{grid-template-columns:repeat(2,minmax(0,1fr))}.referral-offer{padding:15px 12px;gap:8px}.referral-offer-icon{width:28px;height:28px;font-size:17px}.referral-offer strong{font-size:clamp(21px,5vw,29px)}}
 @media(max-width:390px){.referral-offers{grid-template-columns:1fr}.referral-offer{gap:12px}.referral-copy .btn{width:100%;gap:13px;padding-inline:12px}.referral-offer strong{font-size:28px}}
+
+
+/* Product menu and five-scents update (photo-safe placeholders until real product photos arrive) */
+.product-photo-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:30px;text-align:center;color:#536750;background:radial-gradient(circle at 50% 44%,rgba(255,255,255,.6) 0 90px,transparent 92px),linear-gradient(145deg,rgba(255,255,255,.23),rgba(255,255,255,0))}
+.placeholder-drawing{width:clamp(72px,8vw,114px);height:auto;filter:drop-shadow(0 5px 14px rgba(52,83,60,.1))}
+.placeholder-product-name{font-family:var(--serif);font-weight:500;font-size:26px;letter-spacing:-.04em;color:#334c36}
+.placeholder-subtitle{font-size:9px;letter-spacing:.19em;font-weight:700;color:#667b64}
+.product-art .product-badge{z-index:2}
+.scents-section{background:#f1f1e8;border-top:1px solid #e0e4d9;border-bottom:1px solid #e1e5dc}
+.scents-intro{text-align:center;display:flex;align-items:center;flex-direction:column;margin-inline:auto;max-width:710px}
+.scents-intro .eyebrow{justify-content:center}
+.scents-intro h2{margin:21px 0 13px;font-family:var(--serif);font-weight:400;line-height:1.17;letter-spacing:-.048em;font-size:clamp(39px,5vw,62px)}
+.scents-intro h2 em{color:#7d9774;font-weight:400}
+.scents-intro>p{max-width:560px;line-height:1.85;color:#768273;font-size:14px;margin:0}
+.scent-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:45px}
+.scent-grid-full{grid-template-columns:repeat(5,minmax(0,1fr))}
+.scent-card{position:relative;display:flex;flex-direction:column;align-items:center;min-height:260px;padding:28px 18px 26px;text-align:center;border:1px solid #dfe4d8;background:#fafaf5;overflow:hidden;box-shadow:0 5px 25px rgba(42,66,43,.035)}
+.scent-card::before{content:"";position:absolute;inset:-55px -55px auto auto;border-radius:50%;width:140px;height:140px;background:var(--scent-accent,#ecebdc);opacity:.44}
+.scent-vanilla{--scent-accent:#ead7bd}.scent-berry{--scent-accent:#e8c8cf}.scent-floral{--scent-accent:#efdedb}.scent-clean{--scent-accent:#d3e1d7}.scent-golden{--scent-accent:#e8dcba}
+.scent-symbol{display:grid;place-items:center;position:relative;z-index:1;width:68px;height:68px;border-radius:50%;background:var(--scent-accent);font:34px var(--serif);color:#5b7359;margin-bottom:21px}
+.scent-card-content{z-index:1;position:relative}
+.scent-count{color:#849381;font-size:9px;font-weight:700;letter-spacing:.18em}
+.scent-card h3{font:500 clamp(21px,2vw,28px)/1.25 var(--serif);letter-spacing:-.035em;color:#3a513f;margin:10px 0 8px}
+.scent-card p{font-size:12px;line-height:1.7;color:#778675;margin:0 auto;max-width:240px}
+.scents-bottom-link{margin-top:37px;text-align:center}
+.scents-disclaimer{margin:25px auto 0;text-align:center;color:#718371;font-size:12px;line-height:1.7}
+#shop .shop-footer a{margin-left:8px}
+@media(max-width:1050px){.scent-grid-full{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){.scent-grid,.scent-grid-full{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:30px}.scent-card{padding:23px 10px;min-height:225px}.scent-card h3{font-size:21px}.scent-card p{font-size:11px}.scent-symbol{width:55px;height:55px;font-size:27px;margin-bottom:15px}.placeholder-drawing{width:85px}.placeholder-product-name{font-size:22px}.placeholder-subtitle{font-size:8px}.scents-intro>p{font-size:13px}}
+@media(max-width:370px){.scent-grid,.scent-grid-full{grid-template-columns:1fr}.scent-card{min-height:0;padding:24px 18px}.scent-card p{max-width:280px}}

@@ -1,80 +1,60 @@
 /*
   SIMPLY NATURAL SKINCARE — EASY WEBSITE EDITS
   -------------------------------------------
-  1. Replace the sample product names, descriptions, scents, and prices below.
-  2. Set demoMode to false once the products reflect the real business.
+  1. Products and scent descriptions come from the Simply Natural product menu.
+  2. Fill in real prices, sizes, and product photo paths when provided.
   3. Set the email and Instagram URL to real business contact details.
   4. For actual product photography, place photos in assets/ and set image to
-     something like 'assets/my-scrub.jpg'. Leave image blank for illustrated jars.
+     something like 'assets/my-scrub.jpg'. Leave image blank for a labeled placeholder.
   5. This is a GitHub Pages-friendly INQUIRY catalog, not a payment checkout.
   IMPORTANT: Do not list unverified ingredients, claims, or prices.
 */
 const SITE_SETTINGS = {
-  demoMode: true,
+  demoMode: false,
   email: '', // Example: 'hello@example.com' — replace with the REAL business email
   instagram: '' // Example: 'https://www.instagram.com/your-real-handle/'
 };
 
+const SCENTS = [
+  { name: 'Warm Vanilla', description: 'Warm, sweet, and comforting.' },
+  { name: 'Berry Bliss', description: 'Juicy, sweet, and bright.' },
+  { name: 'Floral Silk', description: 'Soft, feminine, and elegant.' },
+  { name: 'Clean Aura', description: 'Fresh, light, and clean.' },
+  { name: 'Golden Hour', description: 'Warm, rich, and luxurious.' }
+];
+
+// These five product types and descriptions are from the business's provided product menu.
+// Individual product/scent combinations have NOT been confirmed; inquire about availability.
 const PRODUCTS = [
   {
-    id: 'citrus-bloom',
-    name: 'Citrus Bloom',
-    shortName: 'citrus bloom',
-    category: 'fresh',
-    mood: 'FRESH & BRIGHT',
-    description: 'A sunny, bright-inspired scrub for refreshing little moments.',
-    note: 'Bright and cheerful scent inspiration',
-    price: null, // In dollars, e.g. 16; leave null to show "Ask for price"
-    size: '', // Add real size, e.g. '8 oz'
-    badge: 'Fresh feel',
-    art: 'fresh',
-    decoration: ['✳', '❋'],
-    image: ''
+    id: 'body-scrub', name: 'Body Scrub', shortName: 'body scrub', category: 'body',
+    mood: 'EXFOLIATE & GLOW', description: 'Exfoliate, smooth, and glow with natural ingredients.',
+    note: 'Ask which scents are currently available for this product.',
+    price: null, size: '', badge: 'Body care', art: 'cozy', icon: 'scrub', image: ''
   },
   {
-    id: 'lavender-dream',
-    name: 'Lavender Dream',
-    shortName: 'lavender dream',
-    category: 'floral',
-    mood: 'SOFT & FLORAL',
-    description: 'Soft, floral-inspired self-care for a quiet end-of-day ritual.',
-    note: 'Delicate and soothing scent inspiration',
-    price: null,
-    size: '',
-    badge: 'Slow moments',
-    art: 'floral',
-    decoration: ['✿', '❊'],
-    image: ''
+    id: 'body-butter', name: 'Body Butter', shortName: 'body butter', category: 'body',
+    mood: 'RICH & CREAMY', description: 'Rich, creamy hydration for soft, nourished skin.',
+    note: 'Ask which scents are currently available for this product.',
+    price: null, size: '', badge: 'Body care', art: 'floral', icon: 'butter', image: ''
   },
   {
-    id: 'warm-vanilla',
-    name: 'Warm Vanilla',
-    shortName: 'warm vanilla',
-    category: 'cozy',
-    mood: 'COZY & WARM',
-    description: 'A warm, sweet-inspired mood for moments of everyday comfort.',
-    note: 'Sweet and cozy scent inspiration',
-    price: null,
-    size: '',
-    badge: 'Cozy favorite',
-    art: 'cozy',
-    decoration: ['✹', '✷'],
-    image: ''
+    id: 'deodorant', name: 'Deodorant', shortName: 'deodorant', category: 'body',
+    mood: 'FRESH EVERY DAY', description: 'Natural odor protection that keeps you fresh.',
+    note: 'Ask which scents are currently available for this product.',
+    price: null, size: '', badge: 'Body care', art: 'fresh', icon: 'deodorant', image: ''
   },
   {
-    id: 'rosewater-daydream',
-    name: 'Rosewater Daydream',
-    shortName: 'rosewater',
-    category: 'floral',
-    mood: 'SOFT & FLORAL',
-    description: 'A dreamy, floral-inspired scrub with a soft, romantic feel.',
-    note: 'A romantic floral scent inspiration',
-    price: null,
-    size: '',
-    badge: 'Floral mood',
-    art: 'rose',
-    decoration: ['✿', '✼'],
-    image: ''
+    id: 'face-scrub', name: 'Face Scrub', shortName: 'face scrub', category: 'face',
+    mood: 'SOFT & RADIANT', description: 'Gently exfoliates and refreshes for soft, radiant skin.',
+    note: 'Ask which scents are currently available for this product.',
+    price: null, size: '', badge: 'Face care', art: 'rose', icon: 'face', image: ''
+  },
+  {
+    id: 'lip-balm', name: 'Lip Balm', shortName: 'lip balm', category: 'face',
+    mood: 'A LITTLE SOFTNESS', description: 'Hydrates and protects for soft, healthy lips.',
+    note: 'Ask which scents are currently available for this product.',
+    price: null, size: '', badge: 'Lip care', art: 'cozy', icon: 'lip', image: ''
   }
 ];
 
@@ -105,12 +85,23 @@ function showToast(message) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
 }
+function productIcon(product) {
+  const icons = {
+    scrub: '<rect x="18" y="30" width="44" height="37" rx="8"/><rect x="16" y="21" width="48" height="11" rx="4"/><path d="M28 46h24M28 53h24"/>',
+    butter: '<rect x="15" y="31" width="50" height="34" rx="9"/><rect x="13" y="23" width="54" height="10" rx="4"/><path d="M30 49c5-7 15-7 20 0-4 8-16 8-20 0Z"/>',
+    deodorant: '<rect x="24" y="24" width="32" height="45" rx="8"/><rect x="24" y="17" width="32" height="15" rx="6"/><path d="M32 50h16"/>',
+    face: '<rect x="17" y="31" width="46" height="35" rx="8"/><rect x="14" y="24" width="52" height="11" rx="4"/><path d="M39 42v13M32 49h14"/>',
+    lip: '<rect x="29" y="34" width="22" height="34" rx="4"/><path d="M29 44h22M34 24h12v10H34zM35 24v-8h10v8"/>'
+  };
+  return `<svg class="placeholder-drawing" viewBox="0 0 80 84" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[product.icon] || icons.scrub}</svg>`;
+}
 function artMarkup(product, asButton = false) {
   const tag = asButton ? 'button' : 'div';
   const name = escapeHtml(product.name);
-  const buttonAttrs = asButton ? `type="button" data-action="details" data-id="${escapeHtml(product.id)}" aria-label="View ${name} details"` : `role="img" aria-label="Illustrated product mockup of ${name}"`;
-  const decorations = product.decoration || ['✳', '✿'];
-  const content = product.image ? `<img class="product-image" src="${escapeHtml(product.image)}" alt="${name} product photo" loading="lazy">` : `<span class="product-deco one" aria-hidden="true">${escapeHtml(decorations[0])}</span><span class="product-deco two" aria-hidden="true">${escapeHtml(decorations[1])}</span><div class="product-jar" aria-hidden="true"><div class="product-jar-lid"></div><div class="product-jar-body"><div class="product-jar-label"><span class="mark">✳</span><span class="brand-name">simply natural</span><span class="label-rule"></span><span class="scrub-name">${escapeHtml(product.shortName || product.name)}</span><span class="label-footer">BODY SCRUB</span></div></div></div>`;
+  const buttonAttrs = asButton ? `type="button" data-action="details" data-id="${escapeHtml(product.id)}" aria-label="View ${name} details"` : `role="img" aria-label="Illustrated placeholder for ${name}; real photo coming soon"`;
+  const content = product.image
+    ? `<img class="product-image" src="${escapeHtml(product.image)}" alt="${name} product photo" loading="lazy">`
+    : `<div class="product-photo-placeholder">${productIcon(product)}<span class="placeholder-product-name">${name}</span><span class="placeholder-subtitle">PHOTO COMING SOON</span></div>`;
   return `<${tag} class="product-art art-${escapeHtml(product.art)}" ${buttonAttrs}>${content}${product.badge ? `<span class="product-badge">${escapeHtml(product.badge)}</span>` : ''}</${tag}>`;
 }
 function renderProducts() {
@@ -120,7 +111,7 @@ function renderProducts() {
   const limit = Number.parseInt(grid.dataset.limit || '0', 10);
   const shown = limit > 0 ? allMatching.slice(0, limit) : allMatching;
   grid.innerHTML = shown.map((product) => `<article class="product-card">${artMarkup(product, true)}<div class="product-card-info"><div class="product-overline">${escapeHtml(product.mood)}</div><div class="product-card-top"><h3>${escapeHtml(product.name)}</h3><span class="product-price">${formatPrice(product.price)}</span></div><p class="product-desc">${escapeHtml(product.description)}</p><div class="product-buttons"><button type="button" class="add-button" data-action="add" data-id="${escapeHtml(product.id)}">+ Add to inquiry</button><button type="button" class="detail-button" data-action="details" data-id="${escapeHtml(product.id)}">Details</button></div></div></article>`).join('');
-  if ($('productTotal')) $('productTotal').textContent = `${shown.length} ${shown.length === 1 ? 'scrub' : 'scrubs'}`;
+  if ($('productTotal')) $('productTotal').textContent = `${shown.length} ${shown.length === 1 ? 'product' : 'products'}`;
 }
 function addToCart(id) {
   if (!getProduct(id)) return;
@@ -140,16 +131,16 @@ function renderCart() {
   const count = entries.reduce((sum, entry) => sum + entry.qty, 0);
   $('cartCount').textContent = String(count);
   $('cartHeadingCount').textContent = `(${count})`;
-  $('cartItems').innerHTML = !entries.length ? `<div class="cart-empty"><div class="empty-icon" aria-hidden="true">♡</div><h3>Your bag is waiting.</h3><p>Explore <a href="scrubs.html">the scrubs</a> and save a few favorites to send an inquiry.</p></div>` : entries.map(({product, qty}) => `<div class="cart-row"><div class="cart-art art-${escapeHtml(product.art)}" aria-hidden="true">✳</div><div class="cart-item-details"><h3>${escapeHtml(product.name)}</h3><span>${formatPrice(product.price)}${product.size ? ' · ' + escapeHtml(product.size) : ''}</span><div class="cart-quantity"><button type="button" data-cart="minus" data-id="${escapeHtml(product.id)}" aria-label="Remove one ${escapeHtml(product.name)}">−</button><span>${qty}</span><button type="button" data-cart="plus" data-id="${escapeHtml(product.id)}" aria-label="Add one ${escapeHtml(product.name)}">+</button><button type="button" class="cart-remove" data-cart="remove" data-id="${escapeHtml(product.id)}">Remove</button></div></div></div>`).join('');
+  $('cartItems').innerHTML = !entries.length ? `<div class="cart-empty"><div class="empty-icon" aria-hidden="true">♡</div><h3>Your bag is waiting.</h3><p>Explore <a href="scrubs.html">the products</a> and save a few favorites to send an inquiry.</p></div>` : entries.map(({product, qty}) => `<div class="cart-row"><div class="cart-art art-${escapeHtml(product.art)}" aria-hidden="true">✳</div><div class="cart-item-details"><h3>${escapeHtml(product.name)}</h3><span>${formatPrice(product.price)}${product.size ? ' · ' + escapeHtml(product.size) : ''}</span><div class="cart-quantity"><button type="button" data-cart="minus" data-id="${escapeHtml(product.id)}" aria-label="Remove one ${escapeHtml(product.name)}">−</button><span>${qty}</span><button type="button" data-cart="plus" data-id="${escapeHtml(product.id)}" aria-label="Add one ${escapeHtml(product.name)}">+</button><button type="button" class="cart-remove" data-cart="remove" data-id="${escapeHtml(product.id)}">Remove</button></div></div></div>`).join('');
   $('copyRequest').disabled = count === 0;
   $('emailRequest').disabled = count === 0 || !validEmail(SITE_SETTINGS.email);
   $('emailRequest').title = validEmail(SITE_SETTINGS.email) ? '' : 'Set a business email address in script.js to enable email inquiries';
 }
 function validEmail(value) { return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
 function requestText() {
-  const lines = ['Hello Simply Natural Skincare!', '', "I'd like to ask about these scrubs:"];
+  const lines = ['Hello Simply Natural Skincare!', '', "I'd like to ask about these products:"];
   Object.entries(cart).forEach(([id, qty]) => { const p = getProduct(id); if (p) lines.push(`- ${p.name} × ${qty}${p.size ? ' (' + p.size + ')' : ''}`); });
-  lines.push('', 'Could you please confirm availability, prices, ingredients, and pickup/shipping options?', '', 'Thank you!');
+  lines.push('', 'Preferred scent(s), if available: __________________', '', 'Could you please confirm scent options, availability, prices, ingredients, and pickup/shipping options?', '', 'Thank you!');
   return lines.join('\n');
 }
 async function copyRequest() {
@@ -168,7 +159,7 @@ async function copyRequest() {
 }
 function emailRequest() {
   if (!validEmail(SITE_SETTINGS.email)) return;
-  window.location.href = `mailto:${encodeURIComponent(SITE_SETTINGS.email)}?subject=${encodeURIComponent('Body scrub inquiry — Simply Natural Skincare')}&body=${encodeURIComponent(requestText())}`;
+  window.location.href = `mailto:${encodeURIComponent(SITE_SETTINGS.email)}?subject=${encodeURIComponent('Product inquiry — Simply Natural Skincare')}&body=${encodeURIComponent(requestText())}`;
 }
 function setDrawer(open) {
   $('cartDrawer').hidden = !open;
@@ -180,7 +171,7 @@ function setDrawer(open) {
 function showDetails(id) {
   const p = getProduct(id);if (!p)return;
   lastModalFocus = document.activeElement;
-  $('modalContent').innerHTML = `<div class="modal-grid">${artMarkup(p)}<div class="modal-text"><span class="eyebrow eyebrow-soft">${escapeHtml(p.mood)}</span><h2 id="modalProductName">${escapeHtml(p.name)}</h2><p>${escapeHtml(p.description)}</p><p>${escapeHtml(p.note)}</p><div class="modal-meta"><strong>Price:</strong> ${formatPrice(p.price)}<br><strong>Size:</strong> ${escapeHtml(p.size || 'Ask for details')}<br><strong>Ingredients:</strong> Please request the verified ingredient list before ordering.</div><button type="button" class="btn btn-dark" data-action="add" data-id="${escapeHtml(p.id)}">Add to inquiry <span aria-hidden="true">↗</span></button></div></div>`;
+  $('modalContent').innerHTML = `<div class="modal-grid">${artMarkup(p)}<div class="modal-text"><span class="eyebrow eyebrow-soft">${escapeHtml(p.mood)}</span><h2 id="modalProductName">${escapeHtml(p.name)}</h2><p>${escapeHtml(p.description)}</p><p>${escapeHtml(p.note)}</p><div class="modal-meta"><strong>Price:</strong> ${formatPrice(p.price)}<br><strong>Size:</strong> ${escapeHtml(p.size || 'Ask for details')}<br><strong>Ingredients:</strong> Please request the verified ingredient list before ordering.<br><strong>Scents:</strong> Ask which of our five menu scents can be paired with this product.</div><button type="button" class="btn btn-dark" data-action="add" data-id="${escapeHtml(p.id)}">Add to inquiry <span aria-hidden="true">↗</span></button></div></div>`;
   $('productModal').hidden = false;
   $('productBackdrop').hidden = false;
   document.body.classList.add('no-scroll');
