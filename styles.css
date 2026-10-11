@@ -203,3 +203,6 @@
 .ritual-circle-text .sns-vector{vertical-align:-.17em}
 .cart-art .sns-vector{width:1.1em;height:1.1em}
 .scent-select-arrow{display:block;width:9px;height:9px;right:17px;top:45%;border-right:1.7px solid #617b5b;border-bottom:1.7px solid #617b5b;transform:translateY(-50%) rotate(45deg);font-size:0}
+
+/* Homepage banner update */
+.hero-visual-banner{display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#eef1ea 0%,#dce5d5 100%);padding:34px;min-height:650px}.hero-visual-banner:after{content:none}.hero-banner-image{width:100%;height:100%;max-width:760px;object-fit:contain;border-radius:8px;box-shadow:0 16px 34px rgba(56,73,52,.12)}@media(max-width:1140px){.hero-visual-banner{padding:28px;min-height:600px}}@media(max-width:850px){.hero-visual-banner{padding:24px;min-height:570px}}@media(max-width:620px){.hero-visual-banner{padding:18px;min-height:320px}.hero-banner-image{max-width:100%;max-height:100%}}
