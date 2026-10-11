@@ -312,3 +312,20 @@ function init(){
   renderProducts();renderCart();updateContacts();setupEvents();
 }
 init();
+
+
+/* Products subnavigation — proper link + separate accessible dropdown toggle. */
+(function initProductsSubmenu(){
+  const button = document.querySelector('.nav-products-toggle');
+  const panel = document.getElementById('productsSubmenu');
+  const group = document.querySelector('.nav-products-group');
+  if (!button || !panel || !group) return;
+  const setOpen = (open) => {
+    panel.hidden = !open;
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', open ? 'Close Products submenu' : 'Open Products submenu');
+  };
+  button.addEventListener('click', (event) => {event.stopPropagation();setOpen(panel.hidden);});
+  document.addEventListener('click', (event) => {if (!group.contains(event.target)) setOpen(false);});
+  document.addEventListener('keydown', (event) => {if (event.key === 'Escape' && !panel.hidden) {setOpen(false);button.focus();}});
+})();

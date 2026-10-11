@@ -526,3 +526,131 @@
   .beginnings-photo-frame figcaption{font-size:12px}
   .beginnings-story h2{font-size:38px}
 }
+
+
+/* ====================== NEW: collections, bundles, reviews ====================== */
+.nav-products-group{position:relative;display:flex;align-items:center;gap:4px}
+.nav-products-link{white-space:nowrap}
+.nav-products-current>.nav-products-link{color:#50744e}
+.nav-products-toggle{width:18px;height:23px;display:grid;place-items:center;padding:0;background:transparent;border:0;color:#698062}
+.nav-products-toggle svg{height:14px;width:14px;transition:transform .18s}
+.nav-products-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
+.nav-products-toggle:focus-visible{outline:2px solid #789675;outline-offset:2px}
+.nav-products-submenu{position:absolute;top:calc(100% + 19px);left:-22px;min-width:232px;background:#fffefa;border:1px solid #e2e4d9;box-shadow:0 18px 35px #364c341a;border-radius:2px;z-index:61;padding:11px}
+.nav-products-submenu a{display:block;padding:12px 14px;font-size:12px;color:#3c553e;border-radius:2px;white-space:nowrap}
+.nav-products-submenu a:hover,.nav-products-submenu a:focus-visible{background:#eff3e9;color:#304e33}
+.mobile-product-sublinks{padding:1px 0 8px 15px;border-left:2px solid #d0ddc9;margin:0 0 2px 2px}
+.mobile-product-sublinks a{font-size:12px!important;padding:12px 0!important;color:#62805e}
+.nav-products-submenu[hidden]{display:none!important}
+.desktop-nav{gap:clamp(16px,2.3vw,34px)}
+.new-page-hero{background:#edf0e7;position:relative;overflow:hidden;border-bottom:1px solid #dfe5dc}
+.new-page-hero::before{position:absolute;content:"";pointer-events:none;width:520px;height:520px;right:-100px;top:-280px;border:1px solid #d4ddcc;border-radius:50%}
+.new-page-hero::after{position:absolute;content:"";pointer-events:none;width:370px;height:370px;right:70px;top:-176px;border:1px solid #d4ddcc;border-radius:50%}
+.new-page-hero-inner{position:relative;z-index:1;padding-block:94px 100px;max-width:1320px}
+.new-page-hero .eyebrow{letter-spacing:.18em}
+.new-page-hero h1{font:400 clamp(50px,5.8vw,90px)/1.07 var(--serif);letter-spacing:-.055em;color:#304734;max-width:800px;margin:25px 0 20px}
+.new-page-hero h1 em,.new-section-lead h2 em,.new-soft-cta h2 em,.extras-home-heading h2 em{color:#7d9a72;font-weight:400}
+.new-page-hero p{color:#6b7869;max-width:585px;line-height:1.9;font-size:15px;margin:0}
+.bundle-hero{background:linear-gradient(112deg,#f5f0e9 0%,#ecefe7 100%)}
+.reviews-hero{background:linear-gradient(112deg,#f6f0ec 0%,#edf0e8 100%)}
+.season-current-line{display:flex;align-items:center;gap:10px;margin-top:26px;color:#5b7658;font-size:12px}
+.season-current-dot{width:8px;height:8px;border-radius:50%;background:#8ba47e;box-shadow:0 0 0 4px #d8e4d2}
+.new-section-lead{display:flex;justify-content:space-between;gap:45px;align-items:end;margin-bottom:37px}
+.new-section-lead h2{font:400 clamp(37px,4vw,61px)/1.2 var(--serif);letter-spacing:-.045em;margin:17px 0 0;color:#324735}
+.new-section-lead>p{max-width:320px;font-size:13px;line-height:1.85;color:#7b8577;margin:0 0 9px}
+.seasonal-list-section,.bundle-section,.reviews-section{background:#f9f8f3}
+.season-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.season-card{min-height:360px;display:flex;flex-direction:column;justify-content:space-between;position:relative;border:1px solid #e2e5d8;padding:30px 33px 27px;background:#f1f2e9;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.season-card:hover,.season-card:focus-visible{transform:translateY(-3px);box-shadow:0 18px 34px #475d4620}
+.season-card::after{position:absolute;right:-60px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:var(--season-tone,#e5eadc);content:"";pointer-events:none;opacity:.55}
+.season-spring{--season-tone:#cbdcc3;background:#edf2e8}.season-summer{--season-tone:#e6d4a9;background:#f5f0e4}
+.season-autumn{--season-tone:#d9bba7;background:#f3eae3}.season-winter{--season-tone:#cbdcdb;background:#eef2f1}
+.season-card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;position:relative;z-index:1}
+.season-art{color:#7a9873;width:63px;height:63px}
+.season-art svg{width:100%;height:100%}
+.season-summer .season-art{color:#b49865}.season-autumn .season-art{color:#b07f65}.season-winter .season-art{color:#7e9e9a}
+.season-state{display:inline-flex;align-items:center;max-width:200px;justify-content:center;padding:9px 12px;border-radius:99px;background:rgba(255,255,255,.65);border:1px solid rgba(83,103,79,.15);font-size:10px;color:#60705d;font-weight:700;letter-spacing:.015em;text-align:center;line-height:1.25}
+.season-state.is-coming-soon{color:#6a7755;background:#e8ebd8;border-color:#d9dec9}
+.season-state.is-available{color:#315b3a;background:#dcebdd;border-color:#b6d0b8}
+.season-state.is-off-season{color:#808981;background:#f4f4ee;border-color:#e6e6df}
+.season-card-copy{position:relative;z-index:1;margin-top:28px}
+.season-months{font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:#879485}
+.season-card h3{font:400 clamp(29px,3vw,43px)/1.25 var(--serif);letter-spacing:-.04em;color:#324a34;margin:13px 0 8px}
+.season-card h3 em{color:#829c77}
+.season-card p{color:#738070;font-size:13px;line-height:1.7;margin:0;max-width:320px}
+.season-card-link{position:relative;z-index:1;font-size:12px;color:#45664a;font-weight:700;margin-top:23px;display:inline-flex;align-items:center;gap:12px}
+.season-card-link svg,.season-other-links svg,.extras-arrow svg{height:15px;width:15px}
+.status-fineprint{font-size:11px;color:#899286;line-height:1.7;max-width:740px;margin:29px 0 0}
+.new-soft-cta{background:#e8eee4;border-top:1px solid #dfe7dc;border-bottom:1px solid #e1e8dc}
+.new-soft-cta-inner{padding-block:65px;display:flex;align-items:center;justify-content:space-between;gap:40px}
+.new-soft-cta h2{font:400 clamp(29px,3.2vw,46px)/1.2 var(--serif);letter-spacing:-.04em;margin:13px 0}
+.new-soft-cta p{font-size:13px;line-height:1.85;color:#6e806d;max-width:490px;margin:0}
+.new-soft-cta .btn{white-space:nowrap}
+.season-detail-hero{background:linear-gradient(110deg,#f4f2e8,#e7eee4)}
+.detail-summer{background:linear-gradient(115deg,#f8f2e4,#efe6d2)}
+.detail-autumn{background:linear-gradient(115deg,#f6f0e8,#f2e7df)}
+.detail-winter{background:linear-gradient(115deg,#f5f6f3,#e3edeb)}
+.season-detail-icon{position:absolute;right:11%;top:90px;width:155px;height:155px;color:#9ab396;opacity:.48}
+.season-detail-icon svg{height:100%;width:100%}
+.detail-summer .season-detail-icon{color:#cbb67f}.detail-autumn .season-detail-icon{color:#bf9884}.detail-winter .season-detail-icon{color:#88a9a7}
+.breadcrumb-simple{text-decoration:underline;text-underline-offset:4px}
+.season-detail-tagline{display:flex;align-items:center;gap:19px;margin-top:26px;flex-wrap:wrap}
+.collection-empty{border:1px solid #e3e5db;background:#fffefa;min-height:365px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;padding:42px 27px;text-align:center}
+.empty-leaf{width:65px;height:65px;color:#91aa88}
+.empty-leaf svg{width:100%;height:100%}
+.collection-empty h3,.reviews-empty h3{font:400 clamp(25px,3vw,37px)/1.25 var(--serif);color:#384f3b;letter-spacing:-.03em;margin:5px 0}
+.collection-empty p,.reviews-empty p{color:#778477;line-height:1.8;font-size:13px;max-width:520px;margin:0 0 7px}
+.season-other-section{background:#eef1ea;padding-block:55px}
+.season-other-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.season-other-links a{border:1px solid #cfdacb;padding:14px 17px;background:#f9fbf6;color:#4c6650;display:inline-flex;gap:20px;align-items:center;font-size:12px}
+.season-product-card{display:flex;gap:20px;border:1px solid #e2e6dc;padding:18px;max-width:680px;background:#fffefa}
+.season-product-art{width:185px;min-height:180px;display:grid;place-items:center;background:#ebeee7}
+.season-product-art img{width:100%;height:100%;object-fit:cover}
+.season-item-no-photo{padding:14px;text-align:center;font-size:11px;color:#71856f}
+.season-product-text{flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.season-product-text h3{font:400 25px var(--serif);margin:0}.season-product-text p{font-size:12px;line-height:1.7;margin:0}
+.season-product-text span,.season-product-text a{font-size:12px;color:#547354}
+.bundle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.bundle-card{background:#fffefa;border:1px solid #e5e5da;padding:28px;min-height:410px;display:flex;flex-direction:column;align-items:flex-start}
+.bundle-card-art{height:135px;width:100%;display:grid;place-items:center;color:#819b7b;background:#eef1e9;margin-bottom:20px}
+.bundle-card-art svg{width:74px;height:74px}
+.bundle-gifting .bundle-card-art{background:#f6eae7;color:#b18f88}.bundle-specials .bundle-card-art{background:#f3f0e1;color:#ab9874}
+.bundle-state{padding:8px 10px;background:#f0f1e7;color:#667a61;font-size:10px;letter-spacing:.03em;font-weight:700;border-radius:99px}
+.bundle-card h3{font:400 clamp(25px,2.7vw,33px) var(--serif);color:#334b38;letter-spacing:-.04em;margin:14px 0 9px}
+.bundle-card p{font-size:12px;color:#788477;line-height:1.9;margin:0 0 17px}
+.bundle-note{font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:700;color:#879680;margin-top:auto}
+.bundle-live img{height:165px;width:100%;object-fit:cover;margin-bottom:15px}
+.bundle-live .text-link{margin-top:14px}.bundle-live strong{margin-top:auto}
+.reviews-empty{border:1px solid #e4e5dc;background:#fffefa;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:65px 25px;gap:14px;min-height:370px}
+.reviews-heart{width:64px;height:64px;color:#9fae97}
+.reviews-heart svg{width:100%;height:100%}
+.review-invitation{background:#f0ece4}
+.review-quote-card{margin:0 0 16px;background:#fffefa;border:1px solid #e1e4d9;padding:30px}
+.review-quote-card p{font:italic 400 21px/1.6 var(--serif);margin:0 0 22px;color:#344e37}
+.review-quote-card footer{font-size:12px;color:#74836f}
+.extras-home{background:#faf9f4;border-top:1px solid #e6e8df}
+.extras-home-heading{text-align:center;max-width:630px;margin:0 auto 38px}
+.extras-home-heading h2{font:400 clamp(39px,4.4vw,62px)/1.16 var(--serif);color:#304936;letter-spacing:-.05em;margin:15px 0}
+.extras-home-heading>p{font-size:13px;line-height:1.8;color:#7b897a;margin:0 auto;max-width:525px}
+.extras-home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.extras-home-card{min-height:314px;border:1px solid #e0e5dc;background:#f0f2eb;padding:27px;display:flex;flex-direction:column;align-items:flex-start;transition:transform .2s,box-shadow .2s}
+.extras-home-card:nth-child(2){background:#f3eeea}.extras-home-card:nth-child(3){background:#f3f3ed}
+.extras-home-card:hover,.extras-home-card:focus-visible{transform:translateY(-3px);box-shadow:0 14px 29px #40523d16}
+.extras-home-icon{width:42px;height:42px;color:#7d9b73;margin-bottom:14px}
+.extras-home-icon svg{width:100%;height:100%}
+.extras-home-card .eyebrow{font-size:9px;letter-spacing:.13em}
+.extras-home-card h3{font:400 clamp(24px,2.5vw,34px)/1.2 var(--serif);letter-spacing:-.05em;margin:15px 0 11px;color:#344d39}
+.extras-home-card h3 em{color:#769571}
+.extras-home-card p{font-size:12px;line-height:1.75;color:#778676;margin:0 0 20px}
+.extras-arrow{display:flex;align-items:center;gap:10px;font-size:11px;color:#536f52;font-weight:700;margin-top:auto}
+.catalog-feature-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:-6px 0 39px}
+.catalog-feature-links>a{border:1px solid #e0e4d9;display:flex;align-items:center;gap:15px;background:#f2f4ed;padding:16px 18px}
+.catalog-feature-links>a>svg:first-child{width:36px;height:36px;color:#8da486;flex:none}
+.catalog-feature-links>a>svg:last-child{width:15px;height:15px;margin-left:auto;color:#72866d;flex:none}
+.catalog-feature-links span{display:flex;flex-direction:column;gap:5px}
+.catalog-feature-links strong{font:500 19px var(--serif);color:#374f39}
+.catalog-feature-links small{font-size:10px;color:#81907e;line-height:1.4}
+@media(max-width:1040px){.desktop-nav{gap:16px;font-size:11px}.nav-container{gap:16px}.season-grid{gap:14px}.extras-home-grid{gap:12px}.extras-home-card{padding:21px}.bundle-grid{gap:12px}.bundle-card{padding:21px}}
+@media(max-width:850px){.season-detail-icon{right:4%;top:66px;opacity:.27}.new-page-hero-inner{padding-block:78px}.new-section-lead{gap:25px}.season-card{padding:25px}}
+@media(max-width:620px){.new-page-hero-inner{padding-block:65px 67px}.new-page-hero h1{font-size:clamp(48px,12vw,65px)}.new-page-hero p{font-size:13px}.new-section-lead{display:block}.new-section-lead>p{margin:15px 0 0}.season-grid{grid-template-columns:1fr}.season-card{min-height:310px}.season-art{width:55px;height:55px}.season-detail-icon{width:125px;height:125px;right:5%;top:68px}.new-soft-cta-inner{flex-direction:column;align-items:flex-start;padding-block:49px;gap:24px}.new-soft-cta .btn{white-space:normal}.extras-home-grid,.bundle-grid{grid-template-columns:1fr;gap:13px}.extras-home-card{min-height:265px;padding:23px}.bundle-card{min-height:310px}.catalog-feature-links{grid-template-columns:1fr}.status-fineprint{font-size:11px}.season-product-card{flex-direction:column}.season-product-art{width:100%}.reviews-empty{padding:44px 20px}}
+@media(max-width:360px){.season-card-top{flex-wrap:wrap}.season-state{max-width:100%}.new-page-hero h1{font-size:45px}}
