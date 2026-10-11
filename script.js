@@ -1,13 +1,12 @@
 /*
-  SIMPLY NATURAL SKINCARE — EASY WEBSITE EDITS
-  -------------------------------------------
-  1. Products and scent descriptions come from the Simply Natural product menu.
-  2. Fill in real prices, sizes, and product photo paths when provided.
-  3. Set the email and Instagram URL to real business contact details.
-  4. For actual product photography, place photos in assets/ and set image to
-     something like 'assets/my-scrub.jpg'. Leave image blank for a labeled placeholder.
-  5. This is a GitHub Pages-friendly INQUIRY catalog, not a payment checkout.
-  IMPORTANT: Do not list unverified ingredients, claims, or prices.
+  SIMPLY NATURAL SKINCARE — PRODUCTS & PRICES
+  -----------------------------------------
+  Product names, prices, sizes and ingredient lists below were provided by the business.
+  The four existing product photos are in assets/. Lip Scrub and Lip Balm await photos.
+  Lip Balm ingredients have not been provided; do not invent them.
+  The five scent choices are inquiry requests, not a promise of availability.
+  Update SITE_SETTINGS to enable email/Instagram links.
+  This website collects inquiries; it does not collect payment.
 */
 const SITE_SETTINGS = {
   demoMode: false,
@@ -23,38 +22,50 @@ const SCENTS = [
   { name: 'Golden Hour', description: 'Warm, rich, and luxurious.' }
 ];
 
-// These five product types and descriptions are from the business's provided product menu.
-// Individual product/scent combinations have NOT been confirmed; inquire about availability.
+// Six products from the business's product list. "ingredients" is the supplied
+// formula listing, NOT a third-party verified label declaration.
 const PRODUCTS = [
   {
     id: 'body-scrub', name: 'Body Scrub', shortName: 'body scrub', category: 'body',
     mood: 'EXFOLIATE & GLOW', description: 'Exfoliate, smooth, and glow with natural ingredients.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Body care', art: 'cozy', icon: 'scrub', image: 'assets/body_scrub_berry_bliss.webp'
+    price: 12, size: '10 oz', badge: 'Body care', art: 'cozy', icon: 'scrub', image: 'assets/body_scrub_berry_bliss.webp',
+    ingredients: 'Sucrose (Cane Sugar), Simmondsia Chinensis (Jojoba) Seed Oil, Prunus Amygdalus Dulcis (Sweet Almond) Oil, Cocos Nucifera (Coconut) Oil, Tocopherol (Vitamin E), Essential Oils.'
   },
   {
     id: 'body-butter', name: 'Body Butter', shortName: 'body butter', category: 'body',
     mood: 'RICH & CREAMY', description: 'Rich, creamy hydration for soft, nourished skin.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Body care', art: 'floral', icon: 'butter', image: 'assets/body_butter_golden_hour.webp'
+    price: 16, size: '6 oz', badge: 'Body care', art: 'floral', icon: 'butter', image: 'assets/body_butter_golden_hour.webp',
+    ingredients: 'Butyrospermum Parkii (Shea) Butter, Simmondsia Chinensis (Jojoba) Seed Oil, Prunus Amygdalus Dulcis (Sweet Almond) Oil, Maranta Arundinacea (Arrowroot) Powder, Tocopherol (Vitamin E), Essential Oils.'
   },
   {
     id: 'deodorant', name: 'Deodorant', shortName: 'deodorant', category: 'body',
     mood: 'FRESH EVERY DAY', description: 'Natural odor protection that keeps you fresh.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Body care', art: 'fresh', icon: 'deodorant', image: 'assets/deodorant_floral_silk.webp'
+    price: 14, size: '2 oz', badge: 'Body care', art: 'fresh', icon: 'deodorant', image: 'assets/deodorant_floral_silk.webp',
+    ingredients: 'Cocos Nucifera (Coconut) Oil, Cera Alba (Beeswax), Maranta Arundinacea (Arrowroot) Powder, Butyrospermum Parkii (Shea) Butter, Tocopherol (Vitamin E), Essential Oils.'
   },
   {
     id: 'face-scrub', name: 'Face Scrub', shortName: 'face scrub', category: 'face',
     mood: 'SOFT & RADIANT', description: 'Gently exfoliates and refreshes for soft, radiant skin.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Face care', art: 'rose', icon: 'face', image: 'assets/face_scrub_warm_vanilla.webp'
+    price: 10, size: '4 oz', badge: 'Face care', art: 'rose', icon: 'face', image: 'assets/face_scrub_warm_vanilla.webp',
+    ingredients: 'Sucrose (Fine White Sugar), Simmondsia Chinensis (Jojoba) Seed Oil, Vitis Vinifera (Grape) Seed Oil, Prunus Amygdalus Dulcis (Sweet Almond) Oil, Tocopherol (Vitamin E), Essential Oils.'
+  },
+  {
+    id: 'lip-scrub', name: 'Lip Scrub', shortName: 'lip scrub', category: 'face',
+    mood: 'A LITTLE POLISH', description: 'A sugar-based lip scrub made for a little extra softness.',
+    note: 'Ask which scents are currently available for this product.',
+    price: 8, size: '2 oz', badge: 'Lip care', art: 'rose', icon: 'scrub', image: '',
+    ingredients: 'Sucrose (Fine White Sugar), Simmondsia Chinensis (Jojoba) Seed Oil, Prunus Amygdalus Dulcis (Sweet Almond) Oil, Cocos Nucifera (Coconut) Oil, Theobroma Cacao (Cocoa) Seed Butter, Tocopherol (Vitamin E), Essential Oils.'
   },
   {
     id: 'lip-balm', name: 'Lip Balm', shortName: 'lip balm', category: 'face',
     mood: 'A LITTLE SOFTNESS', description: 'Hydrates and protects for soft, healthy lips.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Lip care', art: 'cozy', icon: 'lip', image: ''
+    price: 6, size: '4.5 mL', badge: 'Lip care', art: 'cozy', icon: 'lip', image: '',
+    ingredients: null
   }
 ];
 
@@ -114,7 +125,9 @@ function productIcon(product) {
 function artMarkup(product, asButton = false) {
   const tag = asButton ? 'button' : 'div';
   const name = escapeHtml(product.name);
-  const buttonAttrs = asButton ? `type="button" data-action="details" data-id="${escapeHtml(product.id)}" aria-label="View ${name} details"` : `role="img" aria-label="Illustrated placeholder for ${name}; real photo coming soon"`;
+  const buttonAttrs = asButton
+    ? `type="button" data-action="details" data-id="${escapeHtml(product.id)}" aria-label="View ${name} details"`
+    : (product.image ? '' : `role="img" aria-label="Illustrated placeholder for ${name}; real photo coming soon"`);
   const content = product.image
     ? `<img class="product-image" src="${escapeHtml(product.image)}" alt="${name} product photo" loading="lazy">`
     : `<div class="product-photo-placeholder">${productIcon(product)}<span class="placeholder-product-name">${name}</span><span class="placeholder-subtitle">PHOTO COMING SOON</span></div>`;
@@ -126,7 +139,7 @@ function renderProducts() {
   const allMatching = activeFilter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeFilter);
   const limit = Number.parseInt(grid.dataset.limit || '0', 10);
   const shown = limit > 0 ? allMatching.slice(0, limit) : allMatching;
-  grid.innerHTML = shown.map((product) => `<article class="product-card">${artMarkup(product, true)}<div class="product-card-info"><div class="product-overline">${escapeHtml(product.mood)}</div><div class="product-card-top"><h3>${escapeHtml(product.name)}</h3><span class="product-price">${formatPrice(product.price)}</span></div><p class="product-desc">${escapeHtml(product.description)}</p><div class="product-buttons"><button type="button" class="add-button" data-action="details" data-id="${escapeHtml(product.id)}">Choose scent</button><button type="button" class="detail-button" data-action="details" data-id="${escapeHtml(product.id)}">Details</button></div></div></article>`).join('');
+  grid.innerHTML = shown.map((product) => `<article class="product-card">${artMarkup(product, true)}<div class="product-card-info"><div class="product-overline">${escapeHtml(product.mood)}</div><div class="product-card-top"><h3>${escapeHtml(product.name)}</h3><span class="product-price">${formatPrice(product.price)}</span></div><span class="product-size">${escapeHtml(product.size)}</span><p class="product-desc">${escapeHtml(product.description)}</p><div class="product-buttons"><button type="button" class="add-button" data-action="details" data-id="${escapeHtml(product.id)}">Choose scent</button><button type="button" class="detail-button" data-action="details" data-id="${escapeHtml(product.id)}">Details</button></div></div></article>`).join('');
   if ($('productTotal')) $('productTotal').textContent = `${shown.length} ${shown.length === 1 ? 'product' : 'products'}`;
 }
 function addToCart(id, scentName, quantity = 1) {
@@ -168,9 +181,9 @@ function requestText() {
   const lines = ['Hello Simply Natural Skincare!', '', "I'd like to ask about these products:"];
   Object.entries(cart).forEach(([key, qty]) => {
     const entry = cartEntry(key, qty);
-    if (entry) lines.push(`- ${entry.product.name} — ${entry.scent ? entry.scent.name : 'Scent not selected'} × ${qty}${entry.product.size ? ' (' + entry.product.size + ')' : ''}`);
+    if (entry) lines.push(`- ${entry.product.name} — ${entry.scent ? entry.scent.name : 'Scent not selected'} × ${qty}${entry.product.size ? ' (' + entry.product.size + ')' : ''} — ${formatPrice(entry.product.price)}`);
   });
-  lines.push('', 'Please confirm my selected scents, stock availability, prices, ingredients, and pickup/shipping options.', '', 'Thank you!');
+  lines.push('', 'Please confirm my selected scents, stock availability, final pricing, ingredient details, and pickup/shipping options.', '', 'Thank you!');
   return lines.join('\n');
 }
 async function copyRequest() {
@@ -203,7 +216,7 @@ function showDetails(id) {
   if (!p) return;
   lastModalFocus = document.activeElement;
   const options = SCENTS.map((scent) => `<option value="${escapeHtml(scent.name)}">${escapeHtml(scent.name)}</option>`).join('');
-  $('modalContent').innerHTML = `<div class="modal-grid">${artMarkup(p)}<div class="modal-text"><span class="eyebrow eyebrow-soft">${escapeHtml(p.mood)}</span><h2 id="modalProductName">${escapeHtml(p.name)}</h2><p>${escapeHtml(p.description)}</p><div class="modal-meta"><strong>Price:</strong> ${formatPrice(p.price)}<br><strong>Size:</strong> ${escapeHtml(p.size || 'Ask for details')}<br><strong>Ingredients:</strong> Please request the verified ingredient list before ordering.</div><div class="scent-picker"><label for="modalScent">Choose your scent <span aria-hidden="true">✳</span></label><div class="scent-select-wrap"><select id="modalScent" name="scent" required aria-describedby="modalScentDescription"><option value="">Select a scent...</option>${options}</select><span class="scent-select-arrow" aria-hidden="true">⌄</span></div><p class="scent-help" id="modalScentDescription" aria-live="polite">Choose your favorite from our five signature scents.</p></div><p class="availability-note">Scent selections are requests; we’ll confirm what's available before an order is placed.</p><button id="modalAddScent" type="button" class="btn btn-dark" data-action="add" data-id="${escapeHtml(p.id)}" disabled>Add selected scent to inquiry <span aria-hidden="true">↗</span></button></div></div>`;
+  $('modalContent').innerHTML = `<div class="modal-grid">${artMarkup(p)}<div class="modal-text"><span class="eyebrow eyebrow-soft">${escapeHtml(p.mood)}</span><h2 id="modalProductName">${escapeHtml(p.name)}</h2><p>${escapeHtml(p.description)}</p><div class="modal-meta"><strong>Price:</strong> ${formatPrice(p.price)}<br><strong>Size:</strong> ${escapeHtml(p.size || 'Ask for details')}</div><details class="ingredient-panel"><summary>Full ingredients <span aria-hidden="true">+</span></summary><p>${p.ingredients ? escapeHtml(p.ingredients) : 'Ingredients for this product have not been provided yet. Please request the complete ingredient list before ordering.'}</p></details><div class="scent-picker"><label for="modalScent">Choose your scent <span aria-hidden="true">✳</span></label><div class="scent-select-wrap"><select id="modalScent" name="scent" required aria-describedby="modalScentDescription"><option value="">Select a scent...</option>${options}</select><span class="scent-select-arrow" aria-hidden="true">⌄</span></div><p class="scent-help" id="modalScentDescription" aria-live="polite">Choose your favorite from our five signature scents.</p></div><p class="availability-note">Scent selections are requests; we’ll confirm what's available before an order is placed.</p><button id="modalAddScent" type="button" class="btn btn-dark" data-action="add" data-id="${escapeHtml(p.id)}" disabled>Add selected scent to inquiry <span aria-hidden="true">↗</span></button></div></div>`;
   $('productModal').hidden = false;
   $('productBackdrop').hidden = false;
   document.body.classList.add('no-scroll');
