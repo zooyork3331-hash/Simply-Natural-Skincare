@@ -438,3 +438,91 @@
   .ritual-visual-photo{padding:16px;}
   .ritual-photo-frame{min-height:360px;}
 }
+
+
+/* Our Story — original first batch and founder's own words */
+.beginnings-section{
+  background:#f9f7f0;
+  border-top:1px solid #e2e5d9;
+  border-bottom:1px solid #e3e5da;
+  position:relative;
+}
+.beginnings-inner{
+  display:grid;
+  grid-template-columns:minmax(0,.96fr) minmax(0,1fr);
+  gap:clamp(46px,7vw,116px);
+  align-items:center;
+}
+.beginnings-image-column{min-width:0}
+.beginnings-photo-frame{
+  background:#fffdf9;
+  margin:0;
+  padding:13px 13px 19px;
+  box-shadow:0 22px 55px rgba(65,77,59,.10);
+  border:1px solid #e8e6d9;
+  transform:rotate(-1.2deg);
+}
+.beginnings-photo-frame img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1170 / 1132;
+  object-fit:cover;
+}
+.beginnings-photo-frame figcaption{
+  color:#7a8873;
+  font-family:var(--serif);
+  font-size:14px;
+  font-style:italic;
+  text-align:center;
+  margin-top:16px;
+}
+.beginnings-photo-frame figcaption span{padding:0 5px;color:#9eae95}
+.beginnings-story{min-width:0;max-width:610px}
+.beginnings-eyebrow{display:flex;align-items:center;gap:11px}
+.beginnings-leaf{flex:none;color:#769171}
+.beginnings-story h2{
+  font:400 clamp(42px,4.4vw,68px)/1.16 var(--serif);
+  letter-spacing:-.055em;
+  color:#304532;
+  margin:20px 0 0;
+}
+.beginnings-story h2 em{color:#7c9575;font-weight:400}
+.beginnings-rule{height:1px;width:64px;background:#9caa93;margin:27px 0 28px}
+.beginnings-story p{
+  font-size:14px;
+  line-height:1.95;
+  color:#657364;
+  margin:0 0 18px;
+}
+.beginnings-story p.beginnings-lead{
+  font:italic 400 clamp(18px,1.55vw,22px)/1.65 var(--serif);
+  color:#405a42;
+  margin-bottom:23px;
+}
+.beginnings-story p.beginnings-closing{
+  color:#435a44;
+  font-family:var(--serif);
+  font-size:19px;
+  font-style:italic;
+  margin-top:25px;
+  margin-bottom:0;
+}
+@media(max-width:900px){
+  .beginnings-inner{gap:35px;grid-template-columns:minmax(0,.88fr) minmax(0,1fr)}
+  .beginnings-story h2{font-size:clamp(36px,5vw,50px)}
+  .beginnings-story p{font-size:13px;line-height:1.8}
+}
+@media(max-width:700px){
+  .beginnings-inner{grid-template-columns:1fr;gap:43px}
+  .beginnings-image-column{width:min(100%,470px);margin-inline:auto}
+  .beginnings-story{max-width:560px;margin-inline:auto}
+  .beginnings-story h2{font-size:clamp(41px,10vw,56px)}
+  .beginnings-story p{font-size:14px}
+  .beginnings-photo-frame{transform:rotate(-.6deg)}
+}
+@media(max-width:400px){
+  .beginnings-photo-frame{padding:8px 8px 15px}
+  .beginnings-photo-frame figcaption{font-size:12px}
+  .beginnings-story h2{font-size:38px}
+}
