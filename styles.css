@@ -290,3 +290,114 @@
     border-radius:20px;
   }
 }
+
+
+/* COZY EDITORIAL HOMEPAGE — brand banner and content never overlap. */
+.brand-banner{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:#f9f8f3;
+  border-bottom:1px solid #e9e9dd;
+}
+.brand-banner::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 4% 0%,rgba(210,221,200,.35),transparent 47%),
+             radial-gradient(ellipse at 98% 75%,rgba(216,224,207,.34),transparent 43%);
+}
+.brand-banner-inner{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  max-width:1200px;margin-inline:auto;padding:0 20px;
+}
+.brand-banner-image{
+  width:min(100%,650px);height:auto;display:block;
+  mix-blend-mode:multiply;
+}
+.hero-editorial{
+  background:#f5f4ee;
+  border-bottom:1px solid rgba(88,111,81,.12);
+}
+.hero-editorial .hero-grid{
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+  align-items:center;gap:clamp(36px,5.4vw,82px);
+  min-height:0;
+  padding-top:48px;padding-bottom:52px;
+}
+.hero-editorial .hero-copy{
+  display:flex;justify-content:center;align-items:flex-start;flex-direction:column;
+  padding:12px 0 14px;max-width:570px;
+}
+.hero-editorial .hero-copy .eyebrow{font-size:10px;letter-spacing:.16em;color:#687c63}
+.hero-editorial .hero-copy h1{
+  margin:20px 0 20px;
+  font-size:clamp(48px,4.45vw,70px);
+  letter-spacing:-.064em;line-height:1.12;
+}
+.hero-editorial .hero-copy>p{
+  font-size:14px;line-height:1.85;max-width:455px;color:#6f766d;
+}
+.hero-editorial .hero-cta{margin-top:27px;gap:25px}
+.hero-editorial .hero-feature{
+  width:100%;height:355px;margin:0;position:relative;
+  padding:9px;border:1px solid #e3e1d6;
+  background:#fbfaf5;box-shadow:15px 16px 42px rgba(62,79,53,.085);
+}
+.hero-editorial .hero-feature>img{
+  width:100%;height:100%;object-fit:cover;object-position:center 49%;display:block;
+}
+.hero-editorial .hero-feature-caption{
+  position:absolute;right:-12px;bottom:22px;max-width:75%;
+  padding:13px 19px 13px 18px;background:rgba(252,251,244,.97);
+  box-shadow:0 6px 25px rgba(37,53,40,.10);
+  display:flex;flex-direction:column;gap:3px;
+}
+.hero-editorial .hero-feature-caption span{
+  font:600 9px var(--sans);letter-spacing:.13em;color:#87977f;
+}
+.hero-editorial .hero-feature-caption strong{
+  font:italic 22px/1.3 var(--serif);letter-spacing:-.025em;color:#425d43;
+}
+@media(max-width:850px){
+  .brand-banner-image{width:min(100%,610px)}
+  .hero-editorial .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.84fr);gap:23px;padding-block:40px}
+  .hero-editorial .hero-copy h1{font-size:clamp(38px,5.7vw,54px)}
+  .hero-editorial .hero-copy .eyebrow{font-size:9px;line-height:1.5}
+  .hero-editorial .hero-feature{height:340px}
+  .hero-editorial .hero-cta{gap:16px}
+}
+@media(max-width:620px){
+  .brand-banner-inner{padding-inline:0}
+  .brand-banner-image{width:min(100%,540px)}
+  .hero-editorial .hero-grid{
+    display:flex;flex-direction:column;align-items:stretch;
+    padding-top:38px;padding-bottom:42px;gap:32px;
+  }
+  .hero-editorial .hero-copy{padding:0;max-width:none}
+  .hero-editorial .hero-copy h1{font-size:clamp(43px,11vw,60px);margin:17px 0 16px}
+  .hero-editorial .hero-copy>p{font-size:13px;max-width:450px}
+  .hero-editorial .hero-cta{margin-top:23px;gap:17px}
+  .hero-editorial .hero-feature{height:345px;width:100%;max-width:520px;margin-inline:auto}
+  .hero-editorial .hero-feature-caption{right:-3px;bottom:17px;padding:12px 14px}
+  .hero-editorial .hero-feature-caption strong{font-size:19px}
+}
+@media(max-width:370px){
+  .hero-editorial .hero-copy .eyebrow{font-size:8px;letter-spacing:.09em}
+  .hero-editorial .hero-cta{flex-direction:column;align-items:flex-start}
+  .hero-editorial .hero-feature{height:310px}
+}
+
+/* Final visual refinements: intentional title lines, uncropped real product photo. */
+.hero-editorial .hero-copy h1 em{display:block}
+.hero-editorial .hero-feature{
+  width:min(100%,322px);
+  height:auto;
+  aspect-ratio:668 / 817;
+  margin-inline:auto;
+}
+.hero-editorial .hero-feature>img{object-fit:contain;object-position:center}
+@media(max-width:620px){
+  .hero-editorial .hero-grid{padding-inline:22px}
+  .hero-editorial .hero-copy h1{font-size:clamp(37px,10vw,55px)}
+  .hero-editorial .hero-feature{width:min(100%,320px);height:auto;aspect-ratio:668 / 817}
+}
+@media(max-width:370px){
+  .hero-editorial .hero-copy h1{font-size:34px}
+}
