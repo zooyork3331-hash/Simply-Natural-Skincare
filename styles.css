@@ -158,3 +158,20 @@
 @media(max-width:1050px){.scent-grid-full{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:620px){.scent-grid,.scent-grid-full{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:30px}.scent-card{padding:23px 10px;min-height:225px}.scent-card h3{font-size:21px}.scent-card p{font-size:11px}.scent-symbol{width:55px;height:55px;font-size:27px;margin-bottom:15px}.placeholder-drawing{width:85px}.placeholder-product-name{font-size:22px}.placeholder-subtitle{font-size:8px}.scents-intro>p{font-size:13px}}
 @media(max-width:370px){.scent-grid,.scent-grid-full{grid-template-columns:1fr}.scent-card{min-height:0;padding:24px 18px}.scent-card p{max-width:280px}}
+
+/* Product detail scent selection */
+.scent-picker{width:100%;margin:3px 0 7px}
+.scent-picker label{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.025em;font-weight:700;color:#3c5c40;margin-bottom:10px}
+.scent-picker label span{color:#b58f78;font-size:14px}
+.scent-select-wrap{position:relative}
+.scent-select-wrap select{display:block;appearance:none;width:100%;min-height:48px;border:1px solid #bac6b4;border-radius:5px;background:#fffefa;color:#374a37;font:500 13px/1.4 var(--sans,Arial,sans-serif);padding:12px 42px 12px 15px;cursor:pointer;transition:border-color .18s,box-shadow .18s}
+.scent-select-wrap select:hover{border-color:#6a8964}
+.scent-select-wrap select:focus-visible{outline:2px solid #72966b;outline-offset:2px}
+.scent-select-arrow{position:absolute;pointer-events:none;right:16px;top:50%;transform:translateY(-55%);font-size:21px;color:#617b5b}
+.modal-text p.scent-help{font-size:11px;min-height:18px;line-height:1.6;color:#657b62;margin:8px 0 0}
+.modal-text p.availability-note{font-size:11px;line-height:1.6;color:#7d8878;margin:2px 0 13px}
+.modal-text #modalAddScent:disabled{opacity:.48;cursor:not-allowed;filter:grayscale(.25)}
+.cart-item-details .cart-scent{font-size:11px;color:#627a5c;line-height:1.5;margin:8px 0 2px}
+.cart-set-scent{margin-top:7px;background:transparent;border:0;border-bottom:1px solid #7f9b79;font-size:11px;color:#3d633f;padding:0 0 2px;cursor:pointer}
+@media(max-width:620px){.modal-text{gap:0}.scent-picker{margin-top:10px}.scent-select-wrap select{font-size:16px;min-height:52px}.modal-text #modalAddScent{min-height:52px}}
+.modal-text .modal-meta{line-height:1.8}

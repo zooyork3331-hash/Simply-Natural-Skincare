@@ -63,15 +63,31 @@ const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (character
 const getProduct = (id) => PRODUCTS.find((product) => product.id === id);
 const formatPrice = (price) => typeof price === 'number' && Number.isFinite(price) ? new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(price) : 'Ask for price';
 let activeFilter = 'all';
-let cart = readCart();
 let toastTimer;
 let lastModalFocus = null;
+let pendingLegacyProductId = null;
 
+// Each scent has its own inquiry-bag entry, so the same product can be requested
+// in different scents and quantities without losing the customer's selection.
+const scentSlug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const scentBySlug = (slug) => SCENTS.find((scent) => scentSlug(scent.name) === slug);
+const cartKey = (productId, scentName) => `${productId}::${scentSlug(scentName)}`;
+function cartEntry(key, qty) {
+  const [productId, scentCode, ...extra] = key.split('::');
+  const product = getProduct(productId);
+  if (!product || extra.length || !Number.isInteger(qty) || qty < 1 || qty > 99) return null;
+  // Read old unscented inquiries created before the scent selector was added.
+  if (key === productId) return {key, product, scent: null, qty};
+  const scent = scentBySlug(scentCode);
+  return scent ? {key, product, scent, qty} : null;
+}
+
+let cart = readCart();
 function readCart() {
   try {
     const data = JSON.parse(localStorage.getItem('sns-inquiry-cart') || '{}');
     if (!data || typeof data !== 'object' || Array.isArray(data)) return {};
-    return Object.fromEntries(Object.entries(data).filter(([id, qty]) => getProduct(id) && Number.isInteger(qty) && qty > 0 && qty <= 99));
+    return Object.fromEntries(Object.entries(data).filter(([key, qty]) => cartEntry(key, qty)));
   } catch { return {}; }
 }
 function saveCart() {
@@ -110,28 +126,39 @@ function renderProducts() {
   const allMatching = activeFilter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.category === activeFilter);
   const limit = Number.parseInt(grid.dataset.limit || '0', 10);
   const shown = limit > 0 ? allMatching.slice(0, limit) : allMatching;
-  grid.innerHTML = shown.map((product) => `<article class="product-card">${artMarkup(product, true)}<div class="product-card-info"><div class="product-overline">${escapeHtml(product.mood)}</div><div class="product-card-top"><h3>${escapeHtml(product.name)}</h3><span class="product-price">${formatPrice(product.price)}</span></div><p class="product-desc">${escapeHtml(product.description)}</p><div class="product-buttons"><button type="button" class="add-button" data-action="add" data-id="${escapeHtml(product.id)}">+ Add to inquiry</button><button type="button" class="detail-button" data-action="details" data-id="${escapeHtml(product.id)}">Details</button></div></div></article>`).join('');
+  grid.innerHTML = shown.map((product) => `<article class="product-card">${artMarkup(product, true)}<div class="product-card-info"><div class="product-overline">${escapeHtml(product.mood)}</div><div class="product-card-top"><h3>${escapeHtml(product.name)}</h3><span class="product-price">${formatPrice(product.price)}</span></div><p class="product-desc">${escapeHtml(product.description)}</p><div class="product-buttons"><button type="button" class="add-button" data-action="details" data-id="${escapeHtml(product.id)}">Choose scent</button><button type="button" class="detail-button" data-action="details" data-id="${escapeHtml(product.id)}">Details</button></div></div></article>`).join('');
   if ($('productTotal')) $('productTotal').textContent = `${shown.length} ${shown.length === 1 ? 'product' : 'products'}`;
 }
-function addToCart(id) {
-  if (!getProduct(id)) return;
-  cart[id] = Math.min(99, (cart[id] || 0) + 1);
+function addToCart(id, scentName, quantity = 1) {
+  const product = getProduct(id);
+  const scent = SCENTS.find((entry) => entry.name === scentName);
+  if (!product || !scent) return;
+  // Convert any old, unselected bag quantity after a customer assigns its scent.
+  if (pendingLegacyProductId === id && cart[id]) {
+    quantity = cart[id];
+    delete cart[id];
+  }
+  pendingLegacyProductId = null;
+  const key = cartKey(id, scent.name);
+  cart[key] = Math.min(99, (cart[key] || 0) + quantity);
   saveCart();
-  showToast('Added to your inquiry bag ♡');
+  showToast(`${product.name} · ${scent.name} added to your inquiry bag ♡`);
 }
-function changeQuantity(id, by) {
-  if (!getProduct(id)) return;
-  const next = (cart[id] || 0) + by;
-  if (next <= 0) delete cart[id];
-  else cart[id] = Math.min(99, next);
+function changeQuantity(key, by) {
+  if (!cartEntry(key, cart[key] || 0)) return;
+  const next = (cart[key] || 0) + by;
+  if (next <= 0) delete cart[key];
+  else cart[key] = Math.min(99, next);
   saveCart();
 }
 function renderCart() {
-  const entries = Object.entries(cart).map(([id, qty]) => ({product: getProduct(id), qty})).filter(({product}) => product);
+  const entries = Object.entries(cart).map(([key, qty]) => cartEntry(key, qty)).filter(Boolean);
   const count = entries.reduce((sum, entry) => sum + entry.qty, 0);
   $('cartCount').textContent = String(count);
   $('cartHeadingCount').textContent = `(${count})`;
-  $('cartItems').innerHTML = !entries.length ? `<div class="cart-empty"><div class="empty-icon" aria-hidden="true">♡</div><h3>Your bag is waiting.</h3><p>Explore <a href="scrubs.html">the products</a> and save a few favorites to send an inquiry.</p></div>` : entries.map(({product, qty}) => `<div class="cart-row"><div class="cart-art art-${escapeHtml(product.art)}" aria-hidden="true">✳</div><div class="cart-item-details"><h3>${escapeHtml(product.name)}</h3><span>${formatPrice(product.price)}${product.size ? ' · ' + escapeHtml(product.size) : ''}</span><div class="cart-quantity"><button type="button" data-cart="minus" data-id="${escapeHtml(product.id)}" aria-label="Remove one ${escapeHtml(product.name)}">−</button><span>${qty}</span><button type="button" data-cart="plus" data-id="${escapeHtml(product.id)}" aria-label="Add one ${escapeHtml(product.name)}">+</button><button type="button" class="cart-remove" data-cart="remove" data-id="${escapeHtml(product.id)}">Remove</button></div></div></div>`).join('');
+  $('cartItems').innerHTML = !entries.length
+    ? `<div class="cart-empty"><div class="empty-icon" aria-hidden="true">♡</div><h3>Your bag is waiting.</h3><p>Explore <a href="scrubs.html">the products</a> and choose your favorite scents to send an inquiry.</p></div>`
+    : entries.map(({key, product, scent, qty}) => `<div class="cart-row"><div class="cart-art art-${escapeHtml(product.art)}" aria-hidden="true">✳</div><div class="cart-item-details"><h3>${escapeHtml(product.name)}</h3><span>${formatPrice(product.price)}${product.size ? ' · ' + escapeHtml(product.size) : ''}</span><p class="cart-scent"><strong>Preferred scent:</strong> ${scent ? escapeHtml(scent.name) : 'Not selected yet'}</p>${!scent ? `<button type="button" class="cart-set-scent" data-cart="choose" data-id="${escapeHtml(product.id)}">Choose a scent</button>` : ''}<div class="cart-quantity"><button type="button" data-cart="minus" data-key="${escapeHtml(key)}" aria-label="Remove one ${escapeHtml(product.name)}${scent ? ' in ' + escapeHtml(scent.name) : ''}">−</button><span>${qty}</span><button type="button" data-cart="plus" data-key="${escapeHtml(key)}" aria-label="Add one ${escapeHtml(product.name)}${scent ? ' in ' + escapeHtml(scent.name) : ''}">+</button><button type="button" class="cart-remove" data-cart="remove" data-key="${escapeHtml(key)}">Remove</button></div></div></div>`).join('');
   $('copyRequest').disabled = count === 0;
   $('emailRequest').disabled = count === 0 || !validEmail(SITE_SETTINGS.email);
   $('emailRequest').title = validEmail(SITE_SETTINGS.email) ? '' : 'Set a business email address in script.js to enable email inquiries';
@@ -139,8 +166,11 @@ function renderCart() {
 function validEmail(value) { return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
 function requestText() {
   const lines = ['Hello Simply Natural Skincare!', '', "I'd like to ask about these products:"];
-  Object.entries(cart).forEach(([id, qty]) => { const p = getProduct(id); if (p) lines.push(`- ${p.name} × ${qty}${p.size ? ' (' + p.size + ')' : ''}`); });
-  lines.push('', 'Preferred scent(s), if available: __________________', '', 'Could you please confirm scent options, availability, prices, ingredients, and pickup/shipping options?', '', 'Thank you!');
+  Object.entries(cart).forEach(([key, qty]) => {
+    const entry = cartEntry(key, qty);
+    if (entry) lines.push(`- ${entry.product.name} — ${entry.scent ? entry.scent.name : 'Scent not selected'} × ${qty}${entry.product.size ? ' (' + entry.product.size + ')' : ''}`);
+  });
+  lines.push('', 'Please confirm my selected scents, stock availability, prices, ingredients, and pickup/shipping options.', '', 'Thank you!');
   return lines.join('\n');
 }
 async function copyRequest() {
@@ -169,15 +199,18 @@ function setDrawer(open) {
   else $('openCart').focus();
 }
 function showDetails(id) {
-  const p = getProduct(id);if (!p)return;
+  const p = getProduct(id);
+  if (!p) return;
   lastModalFocus = document.activeElement;
-  $('modalContent').innerHTML = `<div class="modal-grid">${artMarkup(p)}<div class="modal-text"><span class="eyebrow eyebrow-soft">${escapeHtml(p.mood)}</span><h2 id="modalProductName">${escapeHtml(p.name)}</h2><p>${escapeHtml(p.description)}</p><p>${escapeHtml(p.note)}</p><div class="modal-meta"><strong>Price:</strong> ${formatPrice(p.price)}<br><strong>Size:</strong> ${escapeHtml(p.size || 'Ask for details')}<br><strong>Ingredients:</strong> Please request the verified ingredient list before ordering.<br><strong>Scents:</strong> Ask which of our five menu scents can be paired with this product.</div><button type="button" class="btn btn-dark" data-action="add" data-id="${escapeHtml(p.id)}">Add to inquiry <span aria-hidden="true">↗</span></button></div></div>`;
+  const options = SCENTS.map((scent) => `<option value="${escapeHtml(scent.name)}">${escapeHtml(scent.name)}</option>`).join('');
+  $('modalContent').innerHTML = `<div class="modal-grid">${artMarkup(p)}<div class="modal-text"><span class="eyebrow eyebrow-soft">${escapeHtml(p.mood)}</span><h2 id="modalProductName">${escapeHtml(p.name)}</h2><p>${escapeHtml(p.description)}</p><div class="modal-meta"><strong>Price:</strong> ${formatPrice(p.price)}<br><strong>Size:</strong> ${escapeHtml(p.size || 'Ask for details')}<br><strong>Ingredients:</strong> Please request the verified ingredient list before ordering.</div><div class="scent-picker"><label for="modalScent">Choose your scent <span aria-hidden="true">✳</span></label><div class="scent-select-wrap"><select id="modalScent" name="scent" required aria-describedby="modalScentDescription"><option value="">Select a scent...</option>${options}</select><span class="scent-select-arrow" aria-hidden="true">⌄</span></div><p class="scent-help" id="modalScentDescription" aria-live="polite">Choose your favorite from our five signature scents.</p></div><p class="availability-note">Scent selections are requests; we’ll confirm what's available before an order is placed.</p><button id="modalAddScent" type="button" class="btn btn-dark" data-action="add" data-id="${escapeHtml(p.id)}" disabled>Add selected scent to inquiry <span aria-hidden="true">↗</span></button></div></div>`;
   $('productModal').hidden = false;
   $('productBackdrop').hidden = false;
   document.body.classList.add('no-scroll');
   $('closeProduct').focus();
 }
 function hideDetails() {
+  pendingLegacyProductId = null;
   $('productModal').hidden = true;
   $('productBackdrop').hidden = true;
   document.body.classList.toggle('no-scroll', !$('cartDrawer').hidden);
@@ -202,15 +235,35 @@ function setupEvents() {
   });
   const onAction = (event) => {
     const el = event.target.closest('[data-action]');if(!el)return;
-    if (el.dataset.action === 'add')addToCart(el.dataset.id);
-    else if(el.dataset.action === 'details')showDetails(el.dataset.id);
+    if (el.dataset.action === 'details') {
+      pendingLegacyProductId = null;
+      showDetails(el.dataset.id);
+    } else if (el.dataset.action === 'add' && el.closest('#modalContent')) {
+      const selectedScent = $('modalScent').value;
+      if (!SCENTS.some((scent) => scent.name === selectedScent)) return;
+      addToCart(el.dataset.id, selectedScent);
+      hideDetails();
+    }
   };
   if ($('productsGrid')) $('productsGrid').addEventListener('click', onAction);
   $('modalContent').addEventListener('click', onAction);
+  $('modalContent').addEventListener('change', (event) => {
+    if (event.target.id !== 'modalScent') return;
+    const scent = SCENTS.find((entry) => entry.name === event.target.value);
+    $('modalAddScent').disabled = !scent;
+    $('modalScentDescription').textContent = scent
+      ? scent.description
+      : 'Choose your favorite from our five signature scents.';
+  });
   $('cartItems').addEventListener('click', (event) => {
     const el = event.target.closest('[data-cart]');if(!el)return;
-    if(el.dataset.cart === 'remove'){delete cart[el.dataset.id];saveCart();}
-    else changeQuantity(el.dataset.id, el.dataset.cart === 'plus' ? 1 : -1);
+    if (el.dataset.cart === 'choose') {
+      pendingLegacyProductId = el.dataset.id;
+      showDetails(el.dataset.id);
+    } else if(el.dataset.cart === 'remove') {
+      delete cart[el.dataset.key];
+      saveCart();
+    } else changeQuantity(el.dataset.key, el.dataset.cart === 'plus' ? 1 : -1);
   });
   $('openCart').addEventListener('click', () => setDrawer(true));
   $('closeCart').addEventListener('click', () => setDrawer(false));
@@ -228,7 +281,7 @@ function setupEvents() {
     if(event.key === 'Tab'){
       const dialog = !$('productModal').hidden ? $('productModal') : (!$('cartDrawer').hidden ? $('cartDrawer') : null);
       if(!dialog)return;
-      const focusables = [...dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled])')].filter(el=>el.offsetParent!==null);
+      const focusables = [...dialog.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled])')].filter(el=>el.offsetParent!==null);
       if(!focusables.length)return;
       const first=focusables[0],last=focusables[focusables.length-1];
       if(event.shiftKey && document.activeElement===first){event.preventDefault();last.focus();}
