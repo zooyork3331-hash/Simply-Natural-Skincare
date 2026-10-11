@@ -30,25 +30,25 @@ const PRODUCTS = [
     id: 'body-scrub', name: 'Body Scrub', shortName: 'body scrub', category: 'body',
     mood: 'EXFOLIATE & GLOW', description: 'Exfoliate, smooth, and glow with natural ingredients.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Body care', art: 'cozy', icon: 'scrub', image: ''
+    price: null, size: '', badge: 'Body care', art: 'cozy', icon: 'scrub', image: 'assets/body_scrub_berry_bliss.webp'
   },
   {
     id: 'body-butter', name: 'Body Butter', shortName: 'body butter', category: 'body',
     mood: 'RICH & CREAMY', description: 'Rich, creamy hydration for soft, nourished skin.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Body care', art: 'floral', icon: 'butter', image: ''
+    price: null, size: '', badge: 'Body care', art: 'floral', icon: 'butter', image: 'assets/body_butter_golden_hour.webp'
   },
   {
     id: 'deodorant', name: 'Deodorant', shortName: 'deodorant', category: 'body',
     mood: 'FRESH EVERY DAY', description: 'Natural odor protection that keeps you fresh.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Body care', art: 'fresh', icon: 'deodorant', image: ''
+    price: null, size: '', badge: 'Body care', art: 'fresh', icon: 'deodorant', image: 'assets/deodorant_floral_silk.webp'
   },
   {
     id: 'face-scrub', name: 'Face Scrub', shortName: 'face scrub', category: 'face',
     mood: 'SOFT & RADIANT', description: 'Gently exfoliates and refreshes for soft, radiant skin.',
     note: 'Ask which scents are currently available for this product.',
-    price: null, size: '', badge: 'Face care', art: 'rose', icon: 'face', image: ''
+    price: null, size: '', badge: 'Face care', art: 'rose', icon: 'face', image: 'assets/face_scrub_warm_vanilla.webp'
   },
   {
     id: 'lip-balm', name: 'Lip Balm', shortName: 'lip balm', category: 'face',
